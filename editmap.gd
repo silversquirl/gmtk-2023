@@ -1,6 +1,10 @@
 extends TileMap
 
+const HEIGHT = 256
+const WIDTH = HEIGHT
 
+func visible_size():
+	return Vector2i(WIDTH, HEIGHT) * tile_set.tile_size
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -17,9 +21,12 @@ func _input(event):
 	if event is InputEventMouseMotion || event is InputEventMouseButton:
 		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
 			var current_tile = local_to_map(get_local_mouse_position())
+			if current_tile.x >= WIDTH || current_tile.y >= HEIGHT: return
 			if chain.is_empty():
 				chain.push_back(current_tile)
 			else:
+				while len(chain) > 10:
+					chain.pop_front()
 				_draw_line_filling(chain[len(chain) - 1], current_tile, func(p): chain.push_back(p))
 				
 			set_cells_terrain_connect(0, chain, 0, 0)
@@ -32,7 +39,6 @@ func _draw_line_filling(start, end, f):
 		f.call(pos)
 		if pos == end: break
 		var diff = end - pos
-		print(end, pos, 	diff)
 		if abs(diff.x) < abs(diff.y): pos.y += sign(diff.y)
 		else: pos.x += sign(diff.x)
 		

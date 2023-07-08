@@ -353,10 +353,9 @@ sources/0 = SubResource("TileSetAtlasSource_8jukn")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
-scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_kw6jq")
 format = 2
-layer_0/tile_data = PackedInt32Array(65534, 524288, 3, -2, 524288, 0, -1, 655360, 0, 65535, 589824, 3, -65536, 720896, 0, 0, 720896, 3)
+layer_0/tile_data = PackedInt32Array(65534, 524288, 3, -2, 524288, 0, -1, 655360, 0, 65535, 589824, 3, -65536, 720896, 0, 0, 393216, 3, 1, 131072, 3, 2, 196608, 0, 65538, 196608, 2, 65537, 131072, 3, 65536, 65536, 3)
 script = ExtResource("2_yxv88")
 
 [node name="PlayerA" type="Sprite2D" parent="TileMap"]
@@ -370,4 +369,5 @@ script = ExtResource("6_7751c")
 script = ExtResource("3_ut3mh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(580, 320)
 script = ExtResource("2_t1rcr")
