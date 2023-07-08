@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=11 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://1g0c5psweap6" path="res://Level_Tileset_A_Cropped.png" id="1_welxa"]
-[ext_resource type="Script" path="res://cameractrl.gd" id="2_t1rcr"]
-[ext_resource type="Script" path="res://editmap.gd" id="2_yxv88"]
-[ext_resource type="Script" path="res://griddraw.gd" id="3_ut3mh"]
+[ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
+[ext_resource type="Script" path="res://PathfindingTracker.gd" id="2_s6sp2"]
+[ext_resource type="Script" path="res://PathfindingDebug.gd" id="3_0eei7"]
+[ext_resource type="Script" path="res://Player.gd" id="4_x7dpu"]
+[ext_resource type="Script" path="res://GridRenderer.gd" id="5_0eh4b"]
 [ext_resource type="Texture2D" uid="uid://bpbkapjpx1um7" path="res://player_a.png" id="5_8cdki"]
-[ext_resource type="Script" path="res://moveplayermanual.gd" id="6_7751c"]
+[ext_resource type="Script" path="res://Camera.gd" id="6_84vyh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_welxa")
@@ -349,25 +351,35 @@ terrain_set_0/terrain_0/name = "Cave"
 terrain_set_0/terrain_0/color = Color(0.843137, 0.301961, 0.498039, 1)
 sources/0 = SubResource("TileSetAtlasSource_8jukn")
 
-[node name="Main map" type="Node2D"]
+[node name="root" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="EditableMap" type="TileMap" parent="."]
 texture_filter = 1
 tile_set = SubResource("TileSet_kw6jq")
 format = 2
-layer_0/tile_data = PackedInt32Array(65534, 524288, 3, -2, 524288, 0, -1, 655360, 0, 65535, 589824, 3, -65536, 720896, 0, 0, 393216, 3, 1, 131072, 3, 2, 196608, 0, 65538, 196608, 2, 65537, 131072, 3, 65536, 65536, 3)
-script = ExtResource("2_yxv88")
+layer_0/tile_data = PackedInt32Array(65534, 524288, 3, -2, 524288, 0, -1, 655360, 0, 65535, 589824, 3, -65536, 720896, 0, 0, 655360, 2, 1, 655360, 0, 2, 720896, 0, 65538, 393216, 3, 65539, 327680, 0, 65540, 720896, 0, 131076, 720896, 3, 131075, 262144, 2, 196611, 196608, 2, 196610, 131072, 0, 196609, 393216, 3, 131073, 720896, 2, 65537, 393216, 2, 65536, 524288, 1, 131072, 524288, 1, 196608, 524288, 3, 262146, 0, 1, 327682, 65536, 2, 327683, 131072, 3, 327684, 131072, 3, 327685, 131072, 3, 327686, 131072, 3, 327687, 131072, 3, 327688, 327680, 3, 262152, 524288, 1, 196616, 524288, 0, 196617, 655360, 0, 196618, 720896, 0, 262154, 720896, 2, 327690, 720896, 3, 327689, 589824, 3, 262153, 589824, 2)
+script = ExtResource("2_jsrkh")
 
-[node name="PlayerA" type="Sprite2D" parent="TileMap"]
+[node name="Player" type="Sprite2D" parent="EditableMap"]
 texture_filter = 1
-position = Vector2(-3.5, -12)
+position = Vector2(20.5, 17)
 scale = Vector2(0.3335, 0.3335)
 texture = ExtResource("5_8cdki")
-script = ExtResource("6_7751c")
+script = ExtResource("4_x7dpu")
 
-[node name="Node2D" type="Node2D" parent="TileMap"]
-script = ExtResource("3_ut3mh")
+[node name="GridRenderer" type="Node2D" parent="EditableMap"]
+script = ExtResource("5_0eh4b")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(580, 320)
-script = ExtResource("2_t1rcr")
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("6_84vyh")
+
+[node name="PathfindingTracker" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_s6sp2")
+
+[node name="PathfindingDebug" type="Control" parent="PathfindingTracker"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_0eei7")

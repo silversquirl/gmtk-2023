@@ -1,15 +1,18 @@
 extends Sprite2D
 
 var _pos = Vector2i(0, 0)
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var tile_size = get_parent().tile_set.tile_size
 	position = _pos * tile_size + tile_size / 2
+
+	var p = %PathfindingTracker
+	p.goal(self, 10)
+	print("goal")
+	print(Engine.get_physics_frames())
+	p.finish()
+	print("finish")
+
 func _input(event):
 	if event is InputEventKey && event.pressed:
 		var d = get_parent().get_cell_tile_data(0, _pos)
