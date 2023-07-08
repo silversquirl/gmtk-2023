@@ -1,13 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=26 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://1g0c5psweap6" path="res://Level_Tileset_A_Cropped.png" id="1_welxa"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
 [ext_resource type="Script" path="res://PathfindingTracker.gd" id="2_s6sp2"]
 [ext_resource type="Script" path="res://PathfindingDebug.gd" id="3_0eei7"]
+[ext_resource type="Texture2D" uid="uid://j2tj4er3tb14" path="res://player_Walk_Foward_1.png" id="3_bogir"]
 [ext_resource type="Script" path="res://Player.gd" id="4_x7dpu"]
 [ext_resource type="Script" path="res://GridRenderer.gd" id="5_0eh4b"]
-[ext_resource type="Texture2D" uid="uid://bpbkapjpx1um7" path="res://player_a.png" id="5_8cdki"]
+[ext_resource type="Script" path="res://Pathfinder.gd" id="5_uliwb"]
 [ext_resource type="Script" path="res://Camera.gd" id="6_84vyh"]
+[ext_resource type="Texture2D" uid="uid://sqtvvitfddvq" path="res://Gold.png" id="6_s8i66"]
+[ext_resource type="Script" path="res://Gold.gd" id="7_5r48l"]
+[ext_resource type="Texture2D" uid="uid://byf20w2cngqjt" path="res://bot.png" id="8_svhex"]
+[ext_resource type="Script" path="res://Bot.gd" id="9_ipijd"]
+[ext_resource type="Script" path="res://DebugHUD.gd" id="14_osj2v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_welxa")
@@ -351,36 +357,134 @@ terrain_set_0/terrain_0/name = "Cave"
 terrain_set_0/terrain_0/color = Color(0.843137, 0.301961, 0.498039, 1)
 sources/0 = SubResource("TileSetAtlasSource_8jukn")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ymip"]
+atlas = ExtResource("3_bogir")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi4up"]
+atlas = ExtResource("3_bogir")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enj88"]
+atlas = ExtResource("3_bogir")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb0ap"]
+atlas = ExtResource("3_bogir")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qeq02"]
+atlas = ExtResource("3_bogir")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hot1w"]
+atlas = ExtResource("3_bogir")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1ok8"]
+atlas = ExtResource("3_bogir")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1f0f"]
+atlas = ExtResource("3_bogir")
+region = Rect2(168, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ufxnr"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ymip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi4up")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enj88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb0ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qeq02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hot1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1ok8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1f0f")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}]
+
 [node name="root" type="Node2D"]
 
 [node name="EditableMap" type="TileMap" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 tile_set = SubResource("TileSet_kw6jq")
 format = 2
-layer_0/tile_data = PackedInt32Array(851990, 655360, 0, 851991, 720896, 0, 917527, 720896, 1, 917529, 196608, 0, 917528, 131072, 3, 983066, 655360, 0, 983067, 720896, 0, 1048603, 720896, 2, 1114139, 720896, 3, 1048601, 524288, 3, 983063, 720896, 3, 983062, 589824, 3, 917525, 524288, 1, 917526, 589824, 2, 851989, 524288, 0, 983061, 524288, 3, 983065, 262144, 1, 1048602, 327680, 2, 1114138, 524288, 3)
+layer_0/tile_data = PackedInt32Array(851990, 655360, 0, 851991, 720896, 0, 917527, 720896, 1, 917529, 196608, 0, 917528, 131072, 3, 983066, 655360, 0, 983067, 720896, 0, 1048603, 720896, 2, 1114139, 720896, 3, 1048601, 524288, 3, 983063, 458752, 2, 983062, 589824, 3, 917525, 524288, 1, 917526, 589824, 2, 851989, 524288, 0, 983061, 524288, 3, 983065, 262144, 1, 1048602, 327680, 2, 1114138, 524288, 3, 1441817, 655360, 0, 1441816, 524288, 0, 1507352, 524288, 1, 1507353, 589824, 2, 1572889, 589824, 2, 1572888, 524288, 1, 1572890, 589824, 2, 1507354, 589824, 2, 1441818, 655360, 0, 1441819, 720896, 0, 1507355, 720896, 2, 1572891, 720896, 2, 1638427, 720896, 3, 1638426, 589824, 3, 1638425, 589824, 3, 1638424, 327680, 3, 1310754, 524288, 3, 1310755, 327680, 2, 1310756, 589824, 2, 1310757, 589824, 2, 1245221, 589824, 2, 1179685, 589824, 2, 1114149, 655360, 0, 1114148, 655360, 0, 1114147, 655360, 0, 1114146, 524288, 0, 1179682, 524288, 1, 1245218, 524288, 1, 1245219, 589824, 2, 1245220, 589824, 2, 1179684, 589824, 2, 1179683, 589824, 2, 1376291, 524288, 1, 1441827, 524288, 3, 1441828, 589824, 3, 1376292, 589824, 2, 1376293, 589824, 2, 1441829, 589824, 3, 1441830, 720896, 3, 1376294, 720896, 2, 1310758, 393216, 2, 1245222, 589824, 2, 1114150, 655360, 0, 1114151, 720896, 0, 1179687, 720896, 2, 1245223, 720896, 2, 1310759, 720896, 3, 1179686, 589824, 2, 1507345, 720896, 0, 1572882, 720896, 0, 1638418, 720896, 2, 1703954, 720896, 2, 1769490, 720896, 2, 1835026, 720896, 3, 1835025, 393216, 2, 1900561, 720896, 3, 1900560, 589824, 3, 1900559, 589824, 3, 1900558, 589824, 3, 1900557, 524288, 3, 1835021, 327680, 2, 1835020, 524288, 3, 1769484, 524288, 1, 1703948, 524288, 1, 1638412, 524288, 1, 1572876, 524288, 0, 1572877, 327680, 1, 1507341, 524288, 0, 1507342, 655360, 0, 1507343, 655360, 0, 1507344, 655360, 0, 1572881, 393216, 1, 1638417, 589824, 2, 1703953, 589824, 2, 1769489, 589824, 2, 1835024, 589824, 2, 1835023, 589824, 2, 1835022, 589824, 2, 1769485, 589824, 2, 1703949, 589824, 2, 1638413, 589824, 2, 1572878, 589824, 2, 1572879, 589824, 2, 1572880, 589824, 2, 1638414, 589824, 2, 1769488, 589824, 2, 1638416, 589824, 2, 1769486, 589824, 2, 1703950, 589824, 2, 1638415, 589824, 2, 1703952, 589824, 2, 1703951, 589824, 2, 1769487, 589824, 2, 1048598, 0, 0, 1114134, 0, 1, 1179670, 0, 1, 1245206, 0, 1, 1310742, 0, 1, 1376278, 0, 1, 1441814, 0, 1, 1507350, 0, 1, 1572886, 0, 1, 1572887, 0, 2, 1507351, 0, 1, 1441815, 0, 1, 1376279, 0, 1, 1310743, 0, 1, 1245207, 0, 1, 1179671, 0, 1, 1114135, 0, 1, 1048599, 0, 1, 1638422, 65536, 2, 1638423, 131072, 3)
 script = ExtResource("2_jsrkh")
 
-[node name="Player" type="Sprite2D" parent="EditableMap"]
+[node name="Player" type="AnimatedSprite2D" parent="EditableMap"]
 texture_filter = 1
 position = Vector2(539, 350)
-scale = Vector2(0.3335, 0.3335)
-texture = ExtResource("5_8cdki")
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_ufxnr")
+animation = &"walk_down"
 script = ExtResource("4_x7dpu")
+
+[node name="Pathfinder" type="Node" parent="EditableMap/Player" node_paths=PackedStringArray("seek", "avoid")]
+script = ExtResource("5_uliwb")
+seek = NodePath("../../../PlayerGoals")
+avoid = NodePath("../../../PlayerHazards")
 
 [node name="GridRenderer" type="Node2D" parent="EditableMap"]
 script = ExtResource("5_0eh4b")
+
+[node name="Gold" type="Sprite2D" parent="EditableMap"]
+position = Vector2(638, 543)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("6_s8i66")
+script = ExtResource("7_5r48l")
+
+[node name="Bot" type="Sprite2D" parent="EditableMap"]
+position = Vector2(564, 464)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_svhex")
+script = ExtResource("9_ipijd")
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(638, 348)
 script = ExtResource("6_84vyh")
 
-[node name="PathfindingTracker" type="Node" parent="."]
+[node name="PlayerGoals" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_s6sp2")
+scale = 2
+
+[node name="PlayerHazards" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_s6sp2")
 
-[node name="PathfindingDebug" type="Control" parent="PathfindingTracker"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="EnemyGoals" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_s6sp2")
+
+[node name="PathfindingDebug" type="Node2D" parent="."]
 script = ExtResource("3_0eei7")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="DebugHUD" type="Node2D" parent="HUD"]
+script = ExtResource("14_osj2v")

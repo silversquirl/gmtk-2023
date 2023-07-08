@@ -1,5 +1,7 @@
 extends TileMap
 
+signal map_update
+
 func visible_size():
 	return Vector2i(Global.map_size, Global.map_size) * tile_set.tile_size
 
@@ -23,6 +25,7 @@ func _input(event):
 
 			set_cells_terrain_connect(0, chain, 0, 0)
 			$GridRenderer.queue_redraw()
+			map_update.emit()
 
 func _draw_line_filling(start, end, f):
 	var pos = start
@@ -57,3 +60,25 @@ func _draw_line(start, end, f):
 			if y == end.y: break
 			error += dx
 			y += sy
+
+
+func passable(pos: Vector2i) -> bool:
+	var tile := get_cell_tile_data(0, pos)
+	return tile and tile.terrain == 0
+
+func can_walk_to(pos: Vector2i, dir: Vector2i) -> bool:
+	var tile := get_cell_tile_data(0, pos)
+	var side: TileSet.CellNeighbor
+	match dir:
+		Vector2i(0, 1):
+			side = TileSet.CELL_NEIGHBOR_BOTTOM_SIDE
+		Vector2i(0, -1):
+			side = TileSet.CELL_NEIGHBOR_TOP_SIDE
+		Vector2i(1, 0):
+			side = TileSet.CELL_NEIGHBOR_RIGHT_SIDE
+		Vector2i(-1, 0):
+			side = TileSet.CELL_NEIGHBOR_LEFT_SIDE
+		_:
+			assert(false)
+	print(side, dir)
+	return tile.get_terrain_peering_bit(side) == tile.terrain
