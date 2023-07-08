@@ -1,27 +1,28 @@
 extends TileMap
 
-const HEIGHT = 256
-const WIDTH = HEIGHT
-
 func visible_size():
-	return Vector2i(WIDTH, HEIGHT) * tile_set.tile_size
+	return Vector2i(Global.map_size, Global.map_size) * tile_set.tile_size
 
 var chain = []
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT: chain = []
-	if event is InputEventMouseMotion || event is InputEventMouseButton:
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
 			var current_tile = local_to_map(get_local_mouse_position())
-			if current_tile.x >= WIDTH || current_tile.y >= HEIGHT: return
+			if (
+				current_tile.x < 0 or current_tile.y < 0 or
+				current_tile.x >= Global.map_size or current_tile.y >= Global.map_size
+			): return
 			if chain.is_empty():
 				chain.push_back(current_tile)
 			else:
 				while len(chain) > 10:
 					chain.pop_front()
 				_draw_line_filling(chain[len(chain) - 1], current_tile, func(p): chain.push_back(p))
-				
+
 			set_cells_terrain_connect(0, chain, 0, 0)
+			$GridRenderer.queue_redraw()
 
 func _draw_line_filling(start, end, f):
 	var pos = start

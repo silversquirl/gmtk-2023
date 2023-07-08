@@ -1,8 +1,9 @@
 extends Node
 
-var buffers := [PackedInt32Array(), PackedInt32Array()]
-var back := 0
-@onready var tiles: TileMap = $"../TileMap"
+var buffer := PackedInt32Array()
+var seeds := Dictionary()
+var old_seeds := Dictionary()
+@onready var tiles: TileMap = $"../EditableMap"
 
 const directions := [
 	Vector2i(0, 1),
@@ -12,47 +13,58 @@ const directions := [
 ]
 
 func _ready():
-	for n in range(len(buffers)):
-		buffers[n].resize(Global.map_size ** 2)
-		buffers[n].fill(-1)
-		
-	finish()
+	buffer.resize(Global.map_size ** 2)
+	buffer.fill(-1)
+
+func _rebuild():
+	# Clear the buffer
+	buffer.fill(-1)
+
+	var queue := []
+	for pos in seeds:
+		queue.push_back({
+			pos = pos,
+			value = seeds[pos],
+		})
+
+	while not queue.is_empty():
+		var cell = queue.pop_front()
+		if (
+			cell.pos.x < 0 or cell.pos.y < 0 or
+			cell.pos.x >= Global.map_size or cell.pos.y >= Global.map_size
+		) or not passable(cell.pos):
+			continue
+
+		var i := idx(cell.pos)
+		if buffer[i] < cell.value:
+			buffer[i] = cell.value
+			for dir in directions:
+				queue.push_back({
+					pos = cell.pos + dir,
+					value = cell.value - 1
+				})
 
 func finish():
-	# Propagate heatmap
-	for x in range(Global.map_size):
-		for y in range(Global.map_size):
-			var pos := Vector2i(x, y)
-			if not passable(pos):
-				continue
+	if old_seeds == seeds:
+		# Reset seeds
+		seeds.clear()
+		return
 
-			var value := 0
-			for dir in directions:
-				var offset_pos: Vector2i = pos + dir
-				if (
-					offset_pos.x < 0 or offset_pos.y < 0 or
-					offset_pos.x >= Global.map_size or offset_pos.y >= Global.map_size
-				):
-					continue
+	_rebuild()
 
-				var val: int = buffers[back][idx(offset_pos)]
-				value = min(value, val)
+	# Reset seeds
+	old_seeds = seeds
+	seeds = Dictionary()
 
-			value = max(value, 0)
-			bump_cell(pos, value)
-
-	# Flip buffers
-	back = 1 - back
-	# Clear new back buffer
-	buffers[back].fill(-1)
+	$PathfindingDebug.queue_redraw()
 
 func passable(pos: Vector2i) -> bool:
 	var data := tiles.get_cell_tile_data(0, pos)
 	return data and data.terrain == 0
 
 func goal(obj: Node2D, priority: int):
-	var pos := tiles.local_to_map(obj.position)
-	bump_cell(pos, priority)
+	var pos := tiles.local_to_map(tiles.to_local(obj.global_position))
+	seeds[pos] = max(seeds.get(pos, -1), priority)
 
 func path_next(pos: Vector2i) -> Vector2i:
 	var value := 0
@@ -66,11 +78,7 @@ func path_next(pos: Vector2i) -> Vector2i:
 
 func idx(pos: Vector2i) -> int:
 	return pos.y * Global.map_size + pos.x
-# Bump a cell in the back buffer
-func bump_cell(pos: Vector2i, value: int):
-	var i := idx(pos)
-	buffers[back][i] = max(value, buffers[back][i])
 
 # Get a cell value from the front buffer
 func get_cell(pos: Vector2i) -> int:
-	return buffers[1 - back][idx(pos)]
+	return buffer[idx(pos)]
