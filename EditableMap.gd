@@ -7,8 +7,6 @@ func visible_size():
 
 var chain = []
 func _input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT: chain = []
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
 			var current_tile = local_to_map(get_local_mouse_position())
@@ -25,7 +23,10 @@ func _input(event):
 
 			set_cells_terrain_connect(0, chain, 0, 0)
 			$GridRenderer.queue_redraw()
-			map_update.emit()
+
+	if event is InputEventMouseButton and event.pressed == false and  event.button_index == MOUSE_BUTTON_LEFT:
+		chain = []
+		map_update.emit()
 
 func _draw_line_filling(start, end, f):
 	var pos = start
@@ -80,5 +81,4 @@ func can_walk_to(pos: Vector2i, dir: Vector2i) -> bool:
 			side = TileSet.CELL_NEIGHBOR_LEFT_SIDE
 		_:
 			assert(false)
-	print(side, dir)
 	return tile.get_terrain_peering_bit(side) == tile.terrain

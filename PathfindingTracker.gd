@@ -39,7 +39,6 @@ func _rebuild():
 		var i := _idx(cell.pos)
 		if buffer[i] < cell.value:
 			buffer[i] = cell.value
-			print(cell.pos, cell.value)
 			for dir in Global.directions:
 				if tiles.can_walk_to(cell.pos, dir):
 					queue.push_back({
