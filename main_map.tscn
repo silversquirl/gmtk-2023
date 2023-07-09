@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=68 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://GridRenderer.gd" id="5_0eh4b"]
 [ext_resource type="Texture2D" uid="uid://boxdiu67tnp5a" path="res://player_Walk_Back_1.png" id="5_licow"]
 [ext_resource type="Script" path="res://Pathfinder.gd" id="5_uliwb"]
+[ext_resource type="Texture2D" uid="uid://lfix0epm4a86" path="res://player_Sword_Walk_Side_L.png" id="6_37lpk"]
 [ext_resource type="Script" path="res://Camera.gd" id="6_84vyh"]
 [ext_resource type="Texture2D" uid="uid://sqtvvitfddvq" path="res://Gold.png" id="6_s8i66"]
 [ext_resource type="Script" path="res://Gold.gd" id="7_5r48l"]
@@ -462,6 +463,38 @@ region = Rect2(144, 0, 24, 24)
 atlas = ExtResource("4_vjd3l")
 region = Rect2(168, 0, 24, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ee5m"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gku67"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjlvq"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mua88"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twl5q"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16ied"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2uch"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vxhj"]
+atlas = ExtResource("6_37lpk")
+region = Rect2(168, 0, 24, 24)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_cpdkk"]
 atlas = ExtResource("5_licow")
 region = Rect2(0, 0, 24, 24)
@@ -590,6 +623,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_3ee5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gku67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjlvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mua88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twl5q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16ied")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2uch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vxhj")
+}],
+"loop": true,
+"name": &"walk_left_sword",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_cpdkk")
 }, {
 "duration": 1.0,
@@ -631,7 +693,7 @@ script = ExtResource("2_jsrkh")
 [node name="Player" type="AnimatedSprite2D" parent="EditableMap"]
 position = Vector2(4286, 2130)
 sprite_frames = SubResource("SpriteFrames_ufxnr")
-animation = &"walk_down"
+animation = &"walk_left_sword"
 script = ExtResource("4_x7dpu")
 
 [node name="Pathfinder" type="Node" parent="EditableMap/Player" node_paths=PackedStringArray("seek", "avoid")]
