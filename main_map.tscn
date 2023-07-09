@@ -488,3 +488,8 @@ script = ExtResource("3_0eei7")
 
 [node name="DebugHUD" type="Node2D" parent="HUD"]
 script = ExtResource("14_osj2v")
+
+[node name="AITimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+autostart = true
