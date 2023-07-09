@@ -68,6 +68,8 @@ func passable(pos: Vector2i) -> bool:
 
 func can_walk_to(pos: Vector2i, dir: Vector2i) -> bool:
 	var tile := get_cell_tile_data(0, pos)
+	if tile == null:
+		return false
 	var side: TileSet.CellNeighbor
 	match dir:
 		Vector2i(0, 1):

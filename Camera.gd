@@ -23,9 +23,10 @@ const zoom_levels = [
 	pow(0.9, 12),
 	pow(0.9, 13),
 ]
-var current_zoom = 3
+var current_zoom = 6
 func _ready():
 	get_tree().get_root().connect("size_changed", fixzoom)
+	fixzoom()
 
 func fixzoom():
 	var vp = get_viewport_rect().size	
@@ -34,7 +35,12 @@ func fixzoom():
 	var newmag = max(zoom_levels[current_zoom], minzoom)
 	zoom = Vector2(newmag, newmag)
 	position = fixpos(position)
-	%EditableMap.texture_filter = TEXTURE_FILTER_NEAREST if newmag >= 1 else TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+
+	var filter := TEXTURE_FILTER_NEAREST if newmag >= 1 else TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+	%EditableMap.texture_filter = filter
+	for node in %EditableMap.find_children("", "CanvasItem"):
+		node.texture_filter = filter
+
 var dragging_from = null
 var prev_pos = null
 func fixpos(pos):
