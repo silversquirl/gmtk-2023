@@ -32,7 +32,12 @@ func path_next(pos: Vector2i) -> Vector2i:
 	return _rand_select(next)
 
 func get_cell(pos: Vector2i) -> int:
-	return seek.get_cell(pos) - avoid.get_cell(pos)
+	var value := 0
+	if seek:
+		value += seek.get_cell(pos)
+	if avoid:
+		value -= avoid.get_cell(pos)
+	return value
 
 func _rand_select(array: Array):
 	return array[randi_range(0, len(array) - 1)]

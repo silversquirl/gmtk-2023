@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=32 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
@@ -13,7 +13,13 @@
 [ext_resource type="Script" path="res://Gold.gd" id="7_5r48l"]
 [ext_resource type="Texture2D" uid="uid://byf20w2cngqjt" path="res://bot.png" id="8_svhex"]
 [ext_resource type="Script" path="res://Bot.gd" id="9_ipijd"]
+[ext_resource type="Texture2D" uid="uid://cmxt8xmy73ttu" path="res://healthbar background1.png" id="14_3xn04"]
 [ext_resource type="Script" path="res://DebugHUD.gd" id="14_osj2v"]
+[ext_resource type="Texture2D" uid="uid://f60tg7vp4u7v" path="res://healthbar foreground1.png" id="15_vmp60"]
+[ext_resource type="Texture2D" uid="uid://hba1lph5ahs6" path="res://healthbar_bar_red2.png" id="16_5yy8o"]
+[ext_resource type="Texture2D" uid="uid://bicmjhod7ip7y" path="res://boredombar background2.png" id="17_0mikx"]
+[ext_resource type="Texture2D" uid="uid://bvf6q4kg8jhbd" path="res://boredombar foreground2.png" id="18_c5j7p"]
+[ext_resource type="Texture2D" uid="uid://dvxrs5xmr2xlj" path="res://boredombar bar2.png" id="19_icln6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_84kxc")
@@ -462,6 +468,10 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("8_svhex")
 script = ExtResource("9_ipijd")
 
+[node name="EnemyPathfinder" type="Node" parent="EditableMap" node_paths=PackedStringArray("seek")]
+script = ExtResource("5_uliwb")
+seek = NodePath("../../EnemyGoals")
+
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(638, 348)
 script = ExtResource("6_84vyh")
@@ -483,6 +493,32 @@ script = ExtResource("2_s6sp2")
 script = ExtResource("3_0eei7")
 
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HealthMeter" type="TextureProgressBar" parent="HUD"]
+unique_name_in_owner = true
+texture_filter = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 100.0
+offset_bottom = 44.0
+scale = Vector2(2, 2)
+value = 84.0
+texture_under = ExtResource("14_3xn04")
+texture_over = ExtResource("15_vmp60")
+texture_progress = ExtResource("16_5yy8o")
+
+[node name="BoredomMeter" type="TextureProgressBar" parent="HUD"]
+unique_name_in_owner = true
+texture_filter = 1
+offset_left = 204.0
+offset_top = 4.0
+offset_right = 300.0
+offset_bottom = 44.0
+scale = Vector2(2, 2)
+value = 69.0
+texture_under = ExtResource("17_0mikx")
+texture_over = ExtResource("18_c5j7p")
+texture_progress = ExtResource("19_icln6")
 
 [node name="DebugHUD" type="Node2D" parent="HUD"]
 script = ExtResource("14_osj2v")

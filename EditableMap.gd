@@ -24,7 +24,7 @@ func _input(event):
 			set_cells_terrain_connect(0, chain, 0, 0)
 			$GridRenderer.queue_redraw()
 
-	if event is InputEventMouseButton and event.pressed == false and  event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
 		chain = []
 		map_update.emit()
 
@@ -61,7 +61,6 @@ func _draw_line(start, end, f):
 			if y == end.y: break
 			error += dx
 			y += sy
-
 
 func passable(pos: Vector2i) -> bool:
 	var tile := get_cell_tile_data(0, pos)
