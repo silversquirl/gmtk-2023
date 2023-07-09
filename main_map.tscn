@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=71 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
@@ -13,18 +13,18 @@
 [ext_resource type="Script" path="res://Pathfinder.gd" id="5_uliwb"]
 [ext_resource type="Texture2D" uid="uid://lfix0epm4a86" path="res://player_Sword_Walk_Side_L.png" id="6_37lpk"]
 [ext_resource type="Script" path="res://Camera.gd" id="6_84vyh"]
-[ext_resource type="Texture2D" uid="uid://sqtvvitfddvq" path="res://Gold.png" id="6_s8i66"]
-[ext_resource type="Script" path="res://Gold.gd" id="7_5r48l"]
 [ext_resource type="Texture2D" uid="uid://byf20w2cngqjt" path="res://bot.png" id="8_svhex"]
 [ext_resource type="Script" path="res://Bot.gd" id="9_ipijd"]
 [ext_resource type="Script" path="res://CollisionDetector.gd" id="10_jwcxe"]
 [ext_resource type="Texture2D" uid="uid://cmxt8xmy73ttu" path="res://healthbar background1.png" id="14_3xn04"]
 [ext_resource type="Script" path="res://DebugHUD.gd" id="14_osj2v"]
+[ext_resource type="PackedScene" uid="uid://c044qlgn2ggx0" path="res://gold.tscn" id="14_wmwjt"]
 [ext_resource type="Texture2D" uid="uid://f60tg7vp4u7v" path="res://healthbar foreground1.png" id="15_vmp60"]
 [ext_resource type="Texture2D" uid="uid://hba1lph5ahs6" path="res://healthbar_bar_red2.png" id="16_5yy8o"]
 [ext_resource type="Texture2D" uid="uid://bicmjhod7ip7y" path="res://boredombar background2.png" id="17_0mikx"]
 [ext_resource type="Texture2D" uid="uid://bvf6q4kg8jhbd" path="res://boredombar foreground2.png" id="18_c5j7p"]
 [ext_resource type="Texture2D" uid="uid://dvxrs5xmr2xlj" path="res://boredombar bar2.png" id="19_icln6"]
+[ext_resource type="Script" path="res://GameOverScreen.gd" id="25_a26mq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_84kxc")
@@ -684,6 +684,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r7cur"]
 size = Vector2(72, 72)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjfnj"]
+
 [node name="root" type="Node2D"]
 
 [node name="EditableMap" type="TileMap" parent="."]
@@ -695,7 +697,8 @@ layer_0/tile_data = PackedInt32Array(1769521, 524288, 0, 1835057, 524288, 1, 190
 script = ExtResource("2_jsrkh")
 
 [node name="Player" type="AnimatedSprite2D" parent="EditableMap"]
-position = Vector2(4286, 2130)
+unique_name_in_owner = true
+position = Vector2(4286, 2123)
 sprite_frames = SubResource("SpriteFrames_ufxnr")
 animation = &"walk_left_sword"
 script = ExtResource("4_x7dpu")
@@ -739,21 +742,10 @@ shape = SubResource("RectangleShape2D_r7cur")
 [node name="Center" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Center"]
-shape = SubResource("RectangleShape2D_r7cur")
+shape = SubResource("CircleShape2D_vjfnj")
 
 [node name="GridRenderer" type="Node2D" parent="EditableMap"]
 script = ExtResource("5_0eh4b")
-
-[node name="Gold" type="Sprite2D" parent="EditableMap"]
-position = Vector2(4724, 2338)
-texture = ExtResource("6_s8i66")
-script = ExtResource("7_5r48l")
-
-[node name="Area2D" type="Area2D" parent="EditableMap/Gold"]
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Gold/Area2D"]
-shape = SubResource("RectangleShape2D_r7cur")
 
 [node name="Bot" type="Sprite2D" parent="EditableMap"]
 position = Vector2(3704, 2128)
@@ -794,11 +786,20 @@ shape = SubResource("RectangleShape2D_r7cur")
 [node name="Center" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Center"]
-shape = SubResource("RectangleShape2D_r7cur")
+shape = SubResource("CircleShape2D_vjfnj")
 
 [node name="EnemyPathfinder" type="Node" parent="EditableMap" node_paths=PackedStringArray("seek")]
 script = ExtResource("5_uliwb")
 seek = NodePath("../../EnemyGoals")
+
+[node name="Gold" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4704, 2355)
+
+[node name="Gold2" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4872, 2046)
+
+[node name="Gold3" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4867, 2178)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(3959, 2138)
@@ -851,6 +852,20 @@ texture_progress = ExtResource("19_icln6")
 [node name="DebugHUD" type="Node2D" parent="HUD"]
 visible = false
 script = ExtResource("14_osj2v")
+
+[node name="GameOverScreen" type="Container" parent="HUD"]
+anchors_preset = -1
+offset_left = 208.0
+offset_top = 256.0
+offset_right = 899.0
+offset_bottom = 358.0
+script = ExtResource("25_a26mq")
+
+[node name="Message" type="Label" parent="HUD/GameOverScreen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "death message goes here"
+horizontal_alignment = 1
 
 [node name="AITimer" type="Timer" parent="."]
 unique_name_in_owner = true

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c044qlgn2ggx0"]
+
+[ext_resource type="Texture2D" uid="uid://sqtvvitfddvq" path="res://Gold.png" id="1_hyb5c"]
+[ext_resource type="Script" path="res://Gold.gd" id="2_m6t2j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1lnmu"]
+
+[node name="Gold" type="Sprite2D"]
+texture = ExtResource("1_hyb5c")
+script = ExtResource("2_m6t2j")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1lnmu")
