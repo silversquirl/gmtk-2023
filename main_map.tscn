@@ -648,7 +648,7 @@ texture = ExtResource("6_s8i66")
 script = ExtResource("7_5r48l")
 
 [node name="Bot" type="Sprite2D" parent="EditableMap"]
-position = Vector2(4820, 2213)
+position = Vector2(3704, 2128)
 texture = ExtResource("8_svhex")
 script = ExtResource("9_ipijd")
 
@@ -657,7 +657,7 @@ script = ExtResource("5_uliwb")
 seek = NodePath("../../EnemyGoals")
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(3947, 2138)
+position = Vector2(3959, 2138)
 script = ExtResource("6_84vyh")
 
 [node name="PlayerGoals" type="Node" parent="."]
@@ -674,6 +674,7 @@ unique_name_in_owner = true
 script = ExtResource("2_s6sp2")
 
 [node name="PathfindingDebug" type="Node2D" parent="."]
+visible = false
 script = ExtResource("3_0eei7")
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -686,7 +687,7 @@ offset_top = 4.0
 offset_right = 100.0
 offset_bottom = 44.0
 scale = Vector2(2, 2)
-value = 84.0
+value = 100.0
 texture_under = ExtResource("14_3xn04")
 texture_over = ExtResource("15_vmp60")
 texture_progress = ExtResource("16_5yy8o")
@@ -699,12 +700,13 @@ offset_top = 4.0
 offset_right = 300.0
 offset_bottom = 44.0
 scale = Vector2(2, 2)
-value = 69.0
+value = 100.0
 texture_under = ExtResource("17_0mikx")
 texture_over = ExtResource("18_c5j7p")
 texture_progress = ExtResource("19_icln6")
 
 [node name="DebugHUD" type="Node2D" parent="HUD"]
+visible = false
 script = ExtResource("14_osj2v")
 
 [node name="AITimer" type="Timer" parent="."]
