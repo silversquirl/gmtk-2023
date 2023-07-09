@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://bvf6q4kg8jhbd" path="res://boredombar foreground2.png" id="18_c5j7p"]
 [ext_resource type="Texture2D" uid="uid://dvxrs5xmr2xlj" path="res://boredombar bar2.png" id="19_icln6"]
 [ext_resource type="Script" path="res://GameOverScreen.gd" id="25_a26mq"]
-[ext_resource type="AudioStream" uid="uid://hbvefr0ar8lv" path="res://Block_Break_4_fade_in_2.wav" id="26_u5n5g"]
+[ext_resource type="AudioStream" uid="uid://tffxngshdlda" path="res://Block_Break_4_fade_in.wav" id="26_w8q4n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_84kxc")
@@ -876,4 +876,4 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="BlockBreak" type="AudioStreamPlayer" parent="SoundEffects"]
-stream = ExtResource("26_u5n5g")
+stream = ExtResource("26_w8q4n")
