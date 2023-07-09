@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=70 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://Gold.gd" id="7_5r48l"]
 [ext_resource type="Texture2D" uid="uid://byf20w2cngqjt" path="res://bot.png" id="8_svhex"]
 [ext_resource type="Script" path="res://Bot.gd" id="9_ipijd"]
+[ext_resource type="Script" path="res://CollisionDetector.gd" id="10_jwcxe"]
 [ext_resource type="Texture2D" uid="uid://cmxt8xmy73ttu" path="res://healthbar background1.png" id="14_3xn04"]
 [ext_resource type="Script" path="res://DebugHUD.gd" id="14_osj2v"]
 [ext_resource type="Texture2D" uid="uid://f60tg7vp4u7v" path="res://healthbar foreground1.png" id="15_vmp60"]
@@ -680,6 +681,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7cur"]
+size = Vector2(72, 72)
+
 [node name="root" type="Node2D"]
 
 [node name="EditableMap" type="TileMap" parent="."]
@@ -701,6 +705,42 @@ script = ExtResource("5_uliwb")
 seek = NodePath("../../../PlayerGoals")
 avoid = NodePath("../../../PlayerHazards")
 
+[node name="CollisionDetector" type="Node2D" parent="EditableMap/Player"]
+script = ExtResource("10_jwcxe")
+
+[node name="Right" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
+position = Vector2(72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Right"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Left" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
+position = Vector2(-72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Left"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Up" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
+position = Vector2(0, -72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Up"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Down" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
+position = Vector2(0, 72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Down"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Center" type="Area2D" parent="EditableMap/Player/CollisionDetector"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Player/CollisionDetector/Center"]
+shape = SubResource("RectangleShape2D_r7cur")
+
 [node name="GridRenderer" type="Node2D" parent="EditableMap"]
 script = ExtResource("5_0eh4b")
 
@@ -709,10 +749,52 @@ position = Vector2(4724, 2338)
 texture = ExtResource("6_s8i66")
 script = ExtResource("7_5r48l")
 
+[node name="Area2D" type="Area2D" parent="EditableMap/Gold"]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Gold/Area2D"]
+shape = SubResource("RectangleShape2D_r7cur")
+
 [node name="Bot" type="Sprite2D" parent="EditableMap"]
 position = Vector2(3704, 2128)
 texture = ExtResource("8_svhex")
 script = ExtResource("9_ipijd")
+
+[node name="CollisionDetector" type="Node2D" parent="EditableMap/Bot"]
+script = ExtResource("10_jwcxe")
+
+[node name="Right" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+position = Vector2(72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Right"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Left" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+position = Vector2(-72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Left"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Up" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+position = Vector2(0, -72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Up"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Down" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+position = Vector2(0, 72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Down"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Center" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Center"]
+shape = SubResource("RectangleShape2D_r7cur")
 
 [node name="EnemyPathfinder" type="Node" parent="EditableMap" node_paths=PackedStringArray("seek")]
 script = ExtResource("5_uliwb")
@@ -762,7 +844,6 @@ offset_top = 4.0
 offset_right = 300.0
 offset_bottom = 44.0
 scale = Vector2(2, 2)
-value = 100.0
 texture_under = ExtResource("17_0mikx")
 texture_over = ExtResource("18_c5j7p")
 texture_progress = ExtResource("19_icln6")
