@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=72 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://bvf6q4kg8jhbd" path="res://boredombar foreground2.png" id="18_c5j7p"]
 [ext_resource type="Texture2D" uid="uid://dvxrs5xmr2xlj" path="res://boredombar bar2.png" id="19_icln6"]
 [ext_resource type="Script" path="res://GameOverScreen.gd" id="25_a26mq"]
+[ext_resource type="AudioStream" uid="uid://hbvefr0ar8lv" path="res://Block_Break_4_fade_in_2.wav" id="26_u5n5g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_84kxc")
@@ -854,7 +855,6 @@ visible = false
 script = ExtResource("14_osj2v")
 
 [node name="GameOverScreen" type="Container" parent="HUD"]
-anchors_preset = -1
 offset_left = 208.0
 offset_top = 256.0
 offset_right = 899.0
@@ -871,3 +871,9 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 wait_time = 0.5
 autostart = true
+
+[node name="SoundEffects" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="BlockBreak" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("26_u5n5g")

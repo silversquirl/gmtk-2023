@@ -21,6 +21,8 @@ func _input(event):
 					chain.pop_front()
 				_draw_line_filling(chain[len(chain) - 1], current_tile, func(p): chain.push_back(p))
 
+			if get_cell_tile_data(0, current_tile) == null:
+				%SoundEffects/BlockBreak.play()
 			set_cells_terrain_connect(0, chain, 0, 0)
 			$GridRenderer.queue_redraw()
 
@@ -38,7 +40,7 @@ func _draw_line_filling(start, end, f):
 		var diff = end - pos
 		if abs(diff.x) < abs(diff.y): pos.y += sign(diff.y)
 		else: pos.x += sign(diff.x)
-		
+
 func _draw_line(start, end, f):
 	var dx = end.x - start.x
 	var dy = end.y - start.y
