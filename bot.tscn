@@ -1,0 +1,114 @@
+[gd_scene load_steps=15 format=3 uid="uid://ukalamlqac46"]
+
+[ext_resource type="Texture2D" uid="uid://deguw4yydnh4i" path="res://Robot_front_1.png" id="1_3hsnx"]
+[ext_resource type="Texture2D" uid="uid://cwbgv6xpw12vu" path="res://Robot_Side.png" id="2_55g6g"]
+[ext_resource type="Texture2D" uid="uid://dj1jcigp4aat8" path="res://Robot_back.png" id="3_kp8vr"]
+[ext_resource type="Script" path="res://Bot.gd" id="4_yua4f"]
+[ext_resource type="Script" path="res://CollisionDetector.gd" id="5_8d53h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jadbm"]
+atlas = ExtResource("1_3hsnx")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0ier"]
+atlas = ExtResource("1_3hsnx")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqr23"]
+atlas = ExtResource("2_55g6g")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w8ah"]
+atlas = ExtResource("2_55g6g")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70ah4"]
+atlas = ExtResource("3_kp8vr")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ti0rp"]
+atlas = ExtResource("3_kp8vr")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_conu6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jadbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0ier")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqr23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w8ah")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70ah4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ti0rp")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7cur"]
+size = Vector2(72, 72)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjfnj"]
+
+[node name="Bot" type="AnimatedSprite2D"]
+position = Vector2(3704, 2128)
+sprite_frames = SubResource("SpriteFrames_conu6")
+animation = &"walk_left"
+script = ExtResource("4_yua4f")
+
+[node name="CollisionDetector" type="Node2D" parent="."]
+script = ExtResource("5_8d53h")
+
+[node name="Right" type="Area2D" parent="CollisionDetector"]
+position = Vector2(72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector/Right"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Left" type="Area2D" parent="CollisionDetector"]
+position = Vector2(-72, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector/Left"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Up" type="Area2D" parent="CollisionDetector"]
+position = Vector2(0, -72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector/Up"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Down" type="Area2D" parent="CollisionDetector"]
+position = Vector2(0, 72)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector/Down"]
+shape = SubResource("RectangleShape2D_r7cur")
+
+[node name="Center" type="Area2D" parent="CollisionDetector"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector/Center"]
+shape = SubResource("CircleShape2D_vjfnj")

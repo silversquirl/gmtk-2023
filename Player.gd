@@ -3,9 +3,15 @@ extends AnimatedSprite2D
 const CollisionDetector = preload("res://CollisionDetector.gd")
 const Bot = preload("res://Bot.gd")
 const Gold = preload("res://Gold.gd")
+const Chest = preload("res://Chest.gd")
 
-var weapon := 0
 var gold := 0
+
+var weapon:
+	get:
+		return %StrengthMeter.value
+	set(value):
+		%StrengthMeter.value = value
 
 var boredom:
 	get:
@@ -37,24 +43,12 @@ func _process(dt):
 	position = map.map_to_local(map_pos) + offset
 
 	scale.x = -1 if direction == Vector2i(1, 0) else 1
-	match direction:
-		Vector2i(0, 1):
-			if weapon > 0:
-				play("walk_down_sword")
-			else:
-				play("walk_down")
-		Vector2i(0, -1):
-			play("walk_up")
-		Vector2i(1, 0), Vector2i(-1, 0):
-			if weapon > 0:
-				play("walk_left_sword")
-			else:
-				play("walk_left")
 
 	if lerp > 0:
 		lerp = clampf(lerp - dt / %AITimer.wait_time, 0.0, 1.0)
+		play("walk" + _anim())
 	else:
-		stop()
+		play("idle" + _anim())
 
 	%EnemyGoals.add_goal(self, 8)
 
@@ -62,8 +56,27 @@ func _process(dt):
 	%PlayerHazards.finish()
 	%EnemyGoals.finish()
 
+func _anim() -> String:
+	match direction:
+		Vector2i(0, 1):
+			if weapon > 0:
+				return "_down_sword"
+			else:
+				return "_down"
+		Vector2i(0, -1):
+			return "_up"
+		Vector2i(1, 0):
+			return "_left"
+		Vector2i(-1, 0):
+			if weapon > 0:
+				return "_left_sword"
+			else:
+				return "_left"
+	return "oopsie"
+
 func ai_step():
 	boredom += 1
+	health += 2
 
 	for thing in $CollisionDetector.collisions:
 		var thing_dir: Vector2i = $CollisionDetector.collisions[thing]
@@ -74,7 +87,9 @@ func ai_step():
 
 		if thing is Gold:
 			_pick_up_gold(thing)
-		elif thing is Bot:
+		elif thing is Chest:
+			_pick_up_weapon(thing)
+		elif thing is Bot and weapon > 0:
 			_attack_enemy(thing)
 		else:
 			continue # idk how to handle this thing, so try a different one
@@ -94,5 +109,14 @@ func _pick_up_gold(entity: Gold) -> void:
 	# Alter boredom
 	boredom -= 15 - gold
 
+func _pick_up_weapon(chest: Chest) -> void:
+	weapon = chest.weapon_strength
+	boredom = 0
+	health = 100
+	chest.queue_free()
+
 func _attack_enemy(enemy: Bot) -> void:
 	enemy.health -= weapon
+	if enemy.health <= 0:
+		enemy.queue_free()
+		%GameOverScreen.recheck_enemies = true

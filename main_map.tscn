@@ -1,20 +1,23 @@
-[gd_scene load_steps=72 format=3 uid="uid://cp870qu5l1a8s"]
+[gd_scene load_steps=84 format=3 uid="uid://cp870qu5l1a8s"]
 
 [ext_resource type="Texture2D" uid="uid://bcbploa6q4jt1" path="res://24x_Tiles.png" id="1_84kxc"]
 [ext_resource type="Script" path="res://EditableMap.gd" id="2_jsrkh"]
 [ext_resource type="Script" path="res://PathfindingTracker.gd" id="2_s6sp2"]
 [ext_resource type="Script" path="res://PathfindingDebug.gd" id="3_0eei7"]
 [ext_resource type="Texture2D" uid="uid://j2tj4er3tb14" path="res://player_Walk_Foward_1.png" id="3_bogir"]
+[ext_resource type="Texture2D" uid="uid://btvqnpd5wrdek" path="res://player_Idle_Forward_1.png" id="3_dvu1s"]
 [ext_resource type="Texture2D" uid="uid://btgw2uqm865n5" path="res://player_Sword_Walk_Front.png" id="4_1nrmb"]
+[ext_resource type="Texture2D" uid="uid://bybbirkic7w30" path="res://player_Idle_Side_1.png" id="4_4cecj"]
+[ext_resource type="Texture2D" uid="uid://c0a5dy5lf8xt5" path="res://player_Idle_Sword_Front.png" id="4_ivjhc"]
 [ext_resource type="Texture2D" uid="uid://cyxh8lyvikwk5" path="res://player_Walk_Side_1.png" id="4_vjd3l"]
 [ext_resource type="Script" path="res://Player.gd" id="4_x7dpu"]
 [ext_resource type="Script" path="res://GridRenderer.gd" id="5_0eh4b"]
 [ext_resource type="Texture2D" uid="uid://boxdiu67tnp5a" path="res://player_Walk_Back_1.png" id="5_licow"]
 [ext_resource type="Script" path="res://Pathfinder.gd" id="5_uliwb"]
+[ext_resource type="Texture2D" uid="uid://b2gwnip84xt5" path="res://player_Idle_back_1.png" id="5_ygdgd"]
 [ext_resource type="Texture2D" uid="uid://lfix0epm4a86" path="res://player_Sword_Walk_Side_L.png" id="6_37lpk"]
 [ext_resource type="Script" path="res://Camera.gd" id="6_84vyh"]
-[ext_resource type="Texture2D" uid="uid://byf20w2cngqjt" path="res://bot.png" id="8_svhex"]
-[ext_resource type="Script" path="res://Bot.gd" id="9_ipijd"]
+[ext_resource type="Texture2D" uid="uid://osflwvom6i5c" path="res://player_Idle_Sword_L.png" id="6_k5qhc"]
 [ext_resource type="Script" path="res://CollisionDetector.gd" id="10_jwcxe"]
 [ext_resource type="Texture2D" uid="uid://cmxt8xmy73ttu" path="res://healthbar background1.png" id="14_3xn04"]
 [ext_resource type="Script" path="res://DebugHUD.gd" id="14_osj2v"]
@@ -22,10 +25,19 @@
 [ext_resource type="Texture2D" uid="uid://f60tg7vp4u7v" path="res://healthbar foreground1.png" id="15_vmp60"]
 [ext_resource type="Texture2D" uid="uid://hba1lph5ahs6" path="res://healthbar_bar_red2.png" id="16_5yy8o"]
 [ext_resource type="Texture2D" uid="uid://bicmjhod7ip7y" path="res://boredombar background2.png" id="17_0mikx"]
+[ext_resource type="PackedScene" uid="uid://ukalamlqac46" path="res://bot.tscn" id="17_wvnnn"]
 [ext_resource type="Texture2D" uid="uid://bvf6q4kg8jhbd" path="res://boredombar foreground2.png" id="18_c5j7p"]
+[ext_resource type="PackedScene" uid="uid://dlgblej4b41us" path="res://chest.tscn" id="19_2tid3"]
 [ext_resource type="Texture2D" uid="uid://dvxrs5xmr2xlj" path="res://boredombar bar2.png" id="19_icln6"]
 [ext_resource type="Script" path="res://GameOverScreen.gd" id="25_a26mq"]
 [ext_resource type="AudioStream" uid="uid://tffxngshdlda" path="res://Block_Break_4_fade_in.wav" id="26_w8q4n"]
+[ext_resource type="Texture2D" uid="uid://ddgnk0xvop3kt" path="res://strengthbar_background.png" id="29_6ceru"]
+[ext_resource type="Texture2D" uid="uid://cish5eurkncdt" path="res://strengthbar_Text.png" id="30_tncaf"]
+[ext_resource type="Texture2D" uid="uid://dlfu22unvrb1h" path="res://Violent_death.png" id="31_emr60"]
+[ext_resource type="Texture2D" uid="uid://b721cddoihbst" path="res://strengthbar_Bar.png" id="31_qt6ge"]
+[ext_resource type="Texture2D" uid="uid://6v3ag2kg7ld8" path="res://Boring_death.png" id="32_0viqo"]
+[ext_resource type="Texture2D" uid="uid://bw0ukftecvaho" path="res://restart.png" id="34_v8v2q"]
+[ext_resource type="Texture2D" uid="uid://qyesud07o4sv" path="res://Wholesome_Death.png" id="36_ykwo5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jukn"]
 texture = ExtResource("1_84kxc")
@@ -531,9 +543,44 @@ region = Rect2(168, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ufxnr"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dvu1s")
+}],
 "loop": true,
-"name": &"default",
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ivjhc")
+}],
+"loop": true,
+"name": &"idle_down_sword",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4cecj")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_k5qhc")
+}],
+"loop": true,
+"name": &"idle_left_sword",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ygdgd")
+}],
+"loop": true,
+"name": &"idle_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -694,14 +741,14 @@ unique_name_in_owner = true
 texture_filter = 6
 tile_set = SubResource("TileSet_kw6jq")
 format = 2
-layer_0/tile_data = PackedInt32Array(1769521, 524288, 0, 1835057, 524288, 1, 1900593, 524288, 1, 1966129, 524288, 1, 2031665, 524288, 3, 2031666, 589824, 3, 2031667, 589824, 3, 1966131, 589824, 2, 2031668, 589824, 3, 1966132, 589824, 2, 1900596, 589824, 2, 1835060, 589824, 2, 1769524, 655360, 0, 1769523, 655360, 0, 1769522, 655360, 0, 1835058, 589824, 2, 1835059, 589824, 2, 1900595, 589824, 2, 1900594, 589824, 2, 1966130, 589824, 2, 1966138, 524288, 3, 1900602, 524288, 1, 1835066, 524288, 0, 1835068, 720896, 0, 1835067, 655360, 0, 1900603, 589824, 2, 1900604, 720896, 2, 1966140, 720896, 3, 1966139, 589824, 3, 1769525, 720896, 0, 1835061, 720896, 2, 1900597, 720896, 2, 1966133, 720896, 2, 2031669, 720896, 3, 1835073, 524288, 0, 1900609, 524288, 1, 1966145, 524288, 1, 2031681, 524288, 1, 2097217, 524288, 3, 2097218, 589824, 3, 2097219, 720896, 3, 2031683, 720896, 2, 1966147, 720896, 2, 1900611, 720896, 2, 1835075, 720896, 0, 1835074, 655360, 0, 1900610, 589824, 2, 1966146, 589824, 2, 2031682, 589824, 2, 1441857, 524288, 0, 1441858, 655360, 0, 1441859, 655360, 0, 1441860, 720896, 0, 1507396, 720896, 2, 1572932, 720896, 3, 1572931, 589824, 3, 1572930, 589824, 3, 1572929, 524288, 3, 1507393, 524288, 1, 1507394, 589824, 2, 1507395, 589824, 2, 1245244, 393216, 2, 1310780, 720896, 3, 1310779, 589824, 3, 1310778, 524288, 3, 1245242, 524288, 1, 1179705, 524288, 3, 1179706, 327680, 2, 1179707, 589824, 2, 1179708, 589824, 2, 1179709, 720896, 2, 1114173, 720896, 0, 1114172, 655360, 0, 1114171, 393216, 1, 1114170, 589824, 2, 1114169, 524288, 1, 1245243, 589824, 2, 1245245, 720896, 3, 1048633, 524288, 0, 1048634, 655360, 0, 1048635, 720896, 0, 1179696, 0, 0, 1245232, 458752, 1, 1310768, 720896, 3, 1310767, 589824, 3, 1245231, 655360, 0, 1245230, 524288, 0, 1310766, 262144, 2, 1376302, 0, 2, 131076, 0, 3, 196613, 0, 0, 262149, 196608, 2, 262148, 131072, 3, 262147, 65536, 3, 3145784, 524288, 0, 3145785, 720896, 0, 3211321, 720896, 2, 3211320, 524288, 1, 3276857, 720896, 3, 3276856, 524288, 3, 2752595, 524288, 3, 2687059, 524288, 0, 2687060, 655360, 0, 2687061, 655360, 0, 2687062, 655360, 0, 2687063, 720896, 0, 2752600, 655360, 0, 2752601, 655360, 0, 2752602, 655360, 0, 2752603, 720896, 0, 2818139, 720896, 2, 2883675, 720896, 2, 2949211, 720896, 2, 3014747, 720896, 3, 3014746, 589824, 3, 2949208, 589824, 3, 3014745, 524288, 3, 2949207, 589824, 3, 2949206, 589824, 3, 2949205, 589824, 3, 2949204, 524288, 3, 2883668, 524288, 1, 2818132, 524288, 1, 2752596, 327680, 2, 2752597, 589824, 2, 2752598, 589824, 2, 2752599, 393216, 1, 2818136, 589824, 2, 2818137, 589824, 2, 2883673, 589824, 2, 2883674, 589824, 2, 2818138, 589824, 2, 2949210, 589824, 2, 2949209, 327680, 2, 2883672, 589824, 2, 2883671, 589824, 2, 2883670, 589824, 2, 2818134, 589824, 2, 2818133, 589824, 2, 2818135, 589824, 2, 2883669, 589824, 2)
+layer_0/tile_data = PackedInt32Array(1769521, 524288, 0, 1835057, 524288, 1, 1900593, 524288, 1, 1966129, 524288, 1, 2031665, 524288, 3, 2031666, 589824, 3, 2031667, 589824, 3, 1966131, 589824, 2, 2031668, 589824, 3, 1966132, 589824, 2, 1900596, 589824, 2, 1835060, 589824, 2, 1769524, 655360, 0, 1769523, 655360, 0, 1769522, 655360, 0, 1835058, 589824, 2, 1835059, 589824, 2, 1900595, 589824, 2, 1900594, 589824, 2, 1966130, 589824, 2, 1966138, 524288, 3, 1900602, 524288, 1, 1835066, 524288, 0, 1835068, 720896, 0, 1835067, 655360, 0, 1900603, 589824, 2, 1900604, 720896, 2, 1966140, 720896, 3, 1966139, 589824, 3, 1769525, 720896, 0, 1835061, 720896, 2, 1900597, 720896, 2, 1966133, 720896, 2, 2031669, 720896, 3, 1835073, 524288, 0, 1900609, 524288, 1, 1966145, 524288, 1, 2031681, 524288, 1, 2097217, 524288, 3, 2097218, 589824, 3, 2097219, 720896, 3, 2031683, 720896, 2, 1966147, 720896, 2, 1900611, 720896, 2, 1835075, 720896, 0, 1835074, 655360, 0, 1900610, 589824, 2, 1966146, 589824, 2, 2031682, 589824, 2, 1441857, 524288, 0, 1441858, 655360, 0, 1441859, 655360, 0, 1441860, 720896, 0, 1507396, 720896, 2, 1572932, 720896, 3, 1572931, 589824, 3, 1572930, 589824, 3, 1572929, 524288, 3, 1507393, 524288, 1, 1507394, 589824, 2, 1507395, 589824, 2, 1245244, 393216, 2, 1310780, 720896, 3, 1310779, 589824, 3, 1310778, 524288, 3, 1245242, 524288, 1, 1179705, 524288, 3, 1179706, 327680, 2, 1179707, 589824, 2, 1179708, 589824, 2, 1179709, 720896, 2, 1114173, 720896, 0, 1114172, 655360, 0, 1114171, 393216, 1, 1114170, 589824, 2, 1114169, 524288, 1, 1245243, 589824, 2, 1245245, 720896, 3, 1048633, 524288, 0, 1048634, 655360, 0, 1048635, 720896, 0, 1179696, 0, 0, 1245232, 458752, 1, 1310768, 720896, 3, 1310767, 589824, 3, 1245231, 655360, 0, 1245230, 524288, 0, 1310766, 262144, 2, 1376302, 0, 2, 131076, 0, 3, 196613, 0, 0, 262149, 196608, 2, 262148, 131072, 3, 262147, 65536, 3, 3145784, 524288, 0, 3145785, 720896, 0, 3211321, 720896, 2, 3211320, 524288, 1, 3276857, 720896, 3, 3276856, 524288, 3, 2752595, 524288, 3, 2687059, 524288, 0, 2687060, 655360, 0, 2687061, 655360, 0, 2687062, 655360, 0, 2687063, 720896, 0, 2752600, 655360, 0, 2752601, 655360, 0, 2752602, 655360, 0, 2752603, 720896, 0, 2818139, 720896, 2, 2883675, 720896, 2, 2949211, 720896, 2, 3014747, 720896, 3, 3014746, 589824, 3, 2949208, 589824, 3, 3014745, 524288, 3, 2949207, 589824, 3, 2949206, 589824, 3, 2949205, 589824, 3, 2949204, 524288, 3, 2883668, 524288, 1, 2818132, 524288, 1, 2752596, 327680, 2, 2752597, 589824, 2, 2752598, 589824, 2, 2752599, 393216, 1, 2818136, 589824, 2, 2818137, 589824, 2, 2883673, 589824, 2, 2883674, 589824, 2, 2818138, 589824, 2, 2949210, 589824, 2, 2949209, 327680, 2, 2883672, 589824, 2, 2883671, 589824, 2, 2883670, 589824, 2, 2818134, 589824, 2, 2818133, 589824, 2, 2818135, 589824, 2, 2883669, 589824, 2, 2097227, 524288, 0, 2162763, 524288, 1, 2228299, 524288, 3, 2293836, 524288, 3, 2293837, 720896, 3, 2228301, 720896, 2, 2162765, 720896, 2, 2097229, 720896, 0, 2097228, 655360, 0, 2162764, 589824, 2, 2228300, 327680, 2, 2621509, 524288, 0, 2687045, 524288, 3, 2687046, 327680, 2, 2752582, 262144, 2, 2818118, 0, 2, 2752583, 720896, 3, 2687047, 720896, 2, 2621511, 720896, 0, 2621510, 655360, 0, 2621497, 524288, 0, 2687033, 524288, 3, 2687034, 327680, 2, 2687035, 720896, 2, 2752571, 720896, 3, 2752570, 524288, 3, 2621498, 327680, 1, 2621499, 720896, 2, 2555963, 720896, 2, 2490427, 720896, 0, 2490426, 524288, 0, 2555962, 524288, 1, 3145802, 524288, 1, 3211338, 524288, 3, 3211339, 589824, 3, 3211340, 589824, 3, 3211341, 720896, 3, 3145805, 720896, 0, 3145804, 393216, 1, 3145803, 589824, 2, 3080266, 524288, 0, 3080267, 655360, 0, 3080268, 720896, 0)
 script = ExtResource("2_jsrkh")
 
 [node name="Player" type="AnimatedSprite2D" parent="EditableMap"]
 unique_name_in_owner = true
 position = Vector2(4286, 2123)
 sprite_frames = SubResource("SpriteFrames_ufxnr")
-animation = &"walk_left_sword"
+animation = &"idle_up"
 script = ExtResource("4_x7dpu")
 
 [node name="Pathfinder" type="Node" parent="EditableMap/Player" node_paths=PackedStringArray("seek", "avoid")]
@@ -748,46 +795,46 @@ shape = SubResource("CircleShape2D_vjfnj")
 [node name="GridRenderer" type="Node2D" parent="EditableMap"]
 script = ExtResource("5_0eh4b")
 
-[node name="Bot" type="Sprite2D" parent="EditableMap"]
-position = Vector2(3704, 2128)
-texture = ExtResource("8_svhex")
-script = ExtResource("9_ipijd")
+[node name="Bot" parent="EditableMap" instance=ExtResource("17_wvnnn")]
 
-[node name="CollisionDetector" type="Node2D" parent="EditableMap/Bot"]
-script = ExtResource("10_jwcxe")
+[node name="Bot2" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(3704, 1993)
 
-[node name="Right" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
-position = Vector2(72, 0)
-monitorable = false
+[node name="Bot3" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(3843, 2255)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Right"]
-shape = SubResource("RectangleShape2D_r7cur")
+[node name="Bot4" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(3570, 2264)
 
-[node name="Left" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
-position = Vector2(-72, 0)
-monitorable = false
+[node name="Bot5" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(3562, 2060)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Left"]
-shape = SubResource("RectangleShape2D_r7cur")
+[node name="Bot6" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(3843, 1988)
 
-[node name="Up" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
-position = Vector2(0, -72)
-monitorable = false
+[node name="Bot12" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(4265, 1307)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Up"]
-shape = SubResource("RectangleShape2D_r7cur")
+[node name="Bot7" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(4791, 2194)
 
-[node name="Down" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
-position = Vector2(0, 72)
-monitorable = false
+[node name="Bot8" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(5571, 2371)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Down"]
-shape = SubResource("RectangleShape2D_r7cur")
+[node name="Bot9" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(6468, 3175)
 
-[node name="Center" type="Area2D" parent="EditableMap/Bot/CollisionDetector"]
+[node name="Bot14" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(6174, 3217)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EditableMap/Bot/CollisionDetector/Center"]
-shape = SubResource("CircleShape2D_vjfnj")
+[node name="Bot15" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(6343, 3091)
+
+[node name="Bot10" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(5443, 3530)
+
+[node name="Bot11" parent="EditableMap" instance=ExtResource("17_wvnnn")]
+position = Vector2(4210, 2951)
 
 [node name="EnemyPathfinder" type="Node" parent="EditableMap" node_paths=PackedStringArray("seek")]
 script = ExtResource("5_uliwb")
@@ -799,8 +846,58 @@ position = Vector2(4704, 2355)
 [node name="Gold2" parent="EditableMap" instance=ExtResource("14_wmwjt")]
 position = Vector2(4872, 2046)
 
+[node name="Gold4" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4845, 1652)
+
+[node name="Gold10" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4162, 1270)
+
+[node name="Gold11" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3403, 1437)
+
+[node name="Gold5" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3613, 2048)
+
+[node name="Gold6" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3571, 2138)
+
+[node name="Gold7" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3628, 2213)
+
+[node name="Gold8" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3788, 2256)
+
+[node name="Gold9" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(3801, 2031)
+
 [node name="Gold3" parent="EditableMap" instance=ExtResource("14_wmwjt")]
 position = Vector2(4867, 2178)
+
+[node name="Gold14" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(5111, 2974)
+
+[node name="Gold16" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(4250, 2827)
+
+[node name="Gold15" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(5547, 2542)
+
+[node name="Gold12" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(6232, 3055)
+
+[node name="Gold13" parent="EditableMap" instance=ExtResource("14_wmwjt")]
+position = Vector2(6260, 3222)
+
+[node name="Chest" parent="EditableMap" instance=ExtResource("19_2tid3")]
+position = Vector2(4774, 1711)
+
+[node name="Chest3" parent="EditableMap" instance=ExtResource("19_2tid3")]
+position = Vector2(6216, 3121)
+weapon_strength = 20
+
+[node name="Chest2" parent="EditableMap" instance=ExtResource("19_2tid3")]
+position = Vector2(4224, 1219)
+weapon_strength = 8
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(3959, 2138)
@@ -837,6 +934,7 @@ value = 100.0
 texture_under = ExtResource("14_3xn04")
 texture_over = ExtResource("15_vmp60")
 texture_progress = ExtResource("16_5yy8o")
+metadata/_edit_use_anchors_ = true
 
 [node name="BoredomMeter" type="TextureProgressBar" parent="HUD"]
 unique_name_in_owner = true
@@ -850,22 +948,49 @@ texture_under = ExtResource("17_0mikx")
 texture_over = ExtResource("18_c5j7p")
 texture_progress = ExtResource("19_icln6")
 
+[node name="StrengthMeter" type="TextureProgressBar" parent="HUD"]
+unique_name_in_owner = true
+texture_filter = 1
+offset_left = 404.0
+offset_top = 4.0
+offset_right = 500.0
+offset_bottom = 44.0
+scale = Vector2(2, 2)
+max_value = 20.0
+texture_under = ExtResource("29_6ceru")
+texture_over = ExtResource("30_tncaf")
+texture_progress = ExtResource("31_qt6ge")
+
 [node name="DebugHUD" type="Node2D" parent="HUD"]
 visible = false
 script = ExtResource("14_osj2v")
 
-[node name="GameOverScreen" type="Container" parent="HUD"]
-offset_left = 208.0
-offset_top = 256.0
-offset_right = 899.0
-offset_bottom = 358.0
+[node name="GameOverScreen" type="Node2D" parent="HUD"]
+unique_name_in_owner = true
+position = Vector2(380, 209)
 script = ExtResource("25_a26mq")
 
-[node name="Message" type="Label" parent="HUD/GameOverScreen"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 64
-text = "death message goes here"
-horizontal_alignment = 1
+[node name="Button" type="TextureButton" parent="HUD/GameOverScreen"]
+offset_left = 161.0
+offset_top = 215.0
+offset_right = 233.0
+offset_bottom = 251.0
+texture_normal = ExtResource("34_v8v2q")
+
+[node name="Violent" type="Sprite2D" parent="HUD/GameOverScreen"]
+position = Vector2(198, 86)
+texture = ExtResource("31_emr60")
+
+[node name="Wholesome" type="Sprite2D" parent="HUD/GameOverScreen"]
+position = Vector2(198, 86)
+texture = ExtResource("36_ykwo5")
+
+[node name="Bored" type="Sprite2D" parent="HUD/GameOverScreen"]
+position = Vector2(198, 85)
+texture = ExtResource("32_0viqo")
+
+[node name="Timer" type="Timer" parent="HUD/GameOverScreen"]
+one_shot = true
 
 [node name="AITimer" type="Timer" parent="."]
 unique_name_in_owner = true

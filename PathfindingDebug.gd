@@ -1,7 +1,7 @@
 extends Node2D
 
 enum Mode { PLAYER, ENEMY }
-var mode: Mode
+var mode: Mode = -1
 @onready var tiles := %EditableMap
 
 func _ready():
